@@ -55,19 +55,8 @@ paths:
           description: Task successful
           content:
             application/json:
-              schema: null
-              type: object
-              properties:
-                id:
-                  readOnly: true
-                  type: integer
-                  example: 1
-                title:
-                  type: string
-                  example: Buy groceries
-                completed:
-                  type: boolean
-                  example: false
+              schema:
+                $ref: '#/components/schemas/Task'
         '400':
           $ref: '#/components/responses/BadRequest'
     /tasks/{id}:
@@ -109,18 +98,20 @@ components:
         completed:
           type: boolean
           example: false
+    ValidationError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Validation failed
+        details:
+          type: array
+          items:
+            type: string
   responses:
     BadRequest:
       description: Invalid input
       content:
         application/json:
-          schema: null
-          type: object
-          properties:
-            error:
-              type: string
-              example: Validation failed
-            details:
-              type: array
-              items:
-                type: string
+          schema:
+            $ref: '#/components/schemas/ValidationError'
