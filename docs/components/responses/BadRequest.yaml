@@ -1,6 +1,5 @@
 description: Invalid input
 content:
   application/json:
-    schema: 
-    $ref: ../schemas/ValidationError.yaml
-
+    schema:
+      $ref: ../schemas/ValidationError.yaml

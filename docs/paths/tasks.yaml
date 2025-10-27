@@ -42,8 +42,8 @@ post:
       description: Task successful
       content:
         application/json:
-          schema: null
-          $ref: ../components/schemas/Task.yaml
+          schema:
+            $ref: ../components/schemas/Task.yaml
     '400':
       $ref: ../components/responses/BadRequest.yaml
 
