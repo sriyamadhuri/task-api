@@ -39,14 +39,14 @@ post:
           $ref: ../components/schemas/Task.yaml
   responses:
     '201':
-      description: Task successful
+      description: Task created successfully
       content:
         application/json:
           schema:
             $ref: ../components/schemas/Task.yaml
     '400':
       $ref: ../components/responses/BadRequest.yaml
-
+      
 '/tasks/{id}':
   get:
     summary: Get a single task by ID
@@ -68,6 +68,14 @@ post:
             schema:
               $ref: ../components/schemas/Task.yaml
       '400':
-        $ref: ../components/responses/BadRequest.yaml
+        description: Invalid ID (validation error)
+        content:
+          application/json:
+            schema:
+              $ref: ../components/schemas/ValidationError.yaml
       '404':
-        $ref: ../components/responses/NotFound.yaml
+        description: Task not found
+        content:
+          application/json:
+            schema:
+              $ref: ../components/responses/NotFoundError.yaml
