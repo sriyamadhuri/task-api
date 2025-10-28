@@ -49,7 +49,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Task'
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Buy groceries
+                completed:
+                  type: boolean
+                  example: false
       responses:
         '201':
           description: Task created successfully
@@ -58,39 +65,43 @@ paths:
               schema:
                 $ref: '#/components/schemas/Task'
         '400':
-          $ref: '#/components/responses/BadRequest'
-    /tasks/{id}:
-      get:
-        summary: Get a single task by ID
-        tags:
-          - Tasks
-        parameters:
-          - name: id
-            in: path
-            required: true
-            description: ID of the task to retrieve
-            schema:
-              type: integer
-              example: 1
-        responses:
-          '200':
-            description: Task found
-            content:
-              application/json:
-                schema:
-                  $ref: ../components/schemas/Task.yaml
-          '400':
-            description: Invalid ID (validation error)
-            content:
-              application/json:
-                schema:
-                  $ref: ../components/schemas/ValidationError.yaml
-          '404':
-            description: Task not found
-            content:
-              application/json:
-                schema:
-                  $ref: ../components/responses/NotFoundError.yaml
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+  /tasks/{id}:
+    get:
+      summary: Get a single task by ID
+      tags:
+        - Tasks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the task to retrieve
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Task found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Invalid ID (validation error)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '404':
+          description: Task not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
 components:
   schemas:
     Task:
@@ -116,10 +127,13 @@ components:
           type: array
           items:
             type: string
-  responses:
-    BadRequest:
-      description: Invalid input
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ValidationError'
+            type: object
+            properties:
+              error:
+                type: string
+                example: Task not found
