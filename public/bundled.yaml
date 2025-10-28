@@ -78,11 +78,19 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: ../components/schemas/responses/Task.yaml
+                  $ref: ../components/schemas/Task.yaml
           '400':
-            $ref: ../components/responses/BadRequest.yaml
+            description: Invalid ID (validation error)
+            content:
+              application/json:
+                schema:
+                  $ref: ../components/schemas/ValidationError.yaml
           '404':
-            $ref: ../components/responses/NotFound.yaml
+            description: Task not found
+            content:
+              application/json:
+                schema:
+                  $ref: ../components/schemas/NotFoundError.yaml
 components:
   schemas:
     Task:
